@@ -183,7 +183,11 @@ describe("<AirportSearch /> component", () => {
 
     AirportSearchWrapper.find(".suggestions2 li").at(0).simulate("click");
 
-    AirportSearchWrapper.find(".roundtrip").simulate("click");
+    AirportSearchWrapper.find(".roundtrip").simulate("change", {
+      target: { checked: true },
+    });
+
+    AirportSearchWrapper.find(".button").simulate("click");
 
     expect(AirportSearchWrapper.state("emissions")).toBe(2 * 0.953583450026314);
   });

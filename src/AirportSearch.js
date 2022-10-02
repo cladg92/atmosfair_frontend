@@ -11,7 +11,7 @@ class AirportSearch extends Component {
     coordinates1: [],
     coordinates2: [],
     emissions: undefined,
-    rountrip: false,
+    isChecked: false,
   };
 
   handleInputChanged1 = (event) => {
@@ -50,6 +50,15 @@ class AirportSearch extends Component {
     });
   };
 
+  handleChange = (event) => {
+    if (event.target.checked) {
+      console.log("Checkbox is checked");
+      this.setState({ isChecked: true });
+    } else {
+      this.setState({ isChecked: false });
+    }
+  };
+
   distance_km = (c1, c2) => {
     let lat1 = c1[0];
     let lon1 = c1[1];
@@ -77,10 +86,10 @@ class AirportSearch extends Component {
   emissions_tons = (distance, factor, detour) => {
     let emissions_kg = factor * (distance + detour);
     let emissions_tons = emissions_kg / 1000;
-    this.state.rountrip
+
+    this.state.isChecked
       ? this.setState({ emissions: emissions_tons * 2 })
       : this.setState({ emissions: emissions_tons });
-    this.setState({ emissions: emissions_kg / 1000 });
   };
 
   render() {
@@ -134,7 +143,8 @@ class AirportSearch extends Component {
           type="checkbox"
           className="roundtrip"
           name="roundtrip"
-          onClick={() => this.setState({ roundtrip: !this.state.rountrip })}
+          value={this.state.isChecked}
+          onChange={this.handleChange}
         />
         <button
           className="button"
