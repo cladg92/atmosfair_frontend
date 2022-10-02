@@ -1,15 +1,26 @@
-import React from "react";
+import React, { Component } from "react";
+
 import "./App.css";
 import AirportSearch from "./AirportSearch";
 import { mockData } from "./mock-data";
 import { extractAirports } from "./api";
 
-function App() {
-  return (
-    <div className="App">
-      <AirportSearch airports={extractAirports(mockData)} />
-    </div>
-  );
+class App extends Component {
+  state = {
+    airports: mockData,
+    locations: extractAirports(mockData),
+  };
+
+  render() {
+    return (
+      <div className="App">
+        <AirportSearch
+          airports={this.state.airports}
+          locations={this.state.locations}
+        />
+      </div>
+    );
+  }
 }
 
 export default App;

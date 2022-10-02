@@ -8,11 +8,13 @@ class AirportSearch extends Component {
     suggestions2: [],
     showSuggestions1: undefined,
     showSuggestions2: undefined,
+    coordinates1: [],
+    coordinates2: [],
   };
 
   handleInputChanged1 = (event) => {
     const value = event.target.value;
-    const suggestions1 = this.props.airports.filter((a) => {
+    const suggestions1 = this.props.locations.filter((a) => {
       return a.toUpperCase().indexOf(value.toUpperCase()) > -1;
     });
     this.setState({ query1: value, suggestions1 });
@@ -20,23 +22,29 @@ class AirportSearch extends Component {
 
   handleInputChanged2 = (event) => {
     const value = event.target.value;
-    const suggestions2 = this.props.airports.filter((a) => {
+    const suggestions2 = this.props.locations.filter((a) => {
       return a.toUpperCase().indexOf(value.toUpperCase()) > -1;
     });
     this.setState({ query2: value, suggestions2 });
   };
 
   handleItemClicked1 = (suggestion) => {
+    const airport1 = this.props.airports.find((a) => a.name === suggestion);
+    const coordinates1 = [airport1.latitude_deg, airport1.longitude_deg];
     this.setState({
       query1: suggestion,
       showSuggestions1: false,
+      coordinates1,
     });
   };
 
   handleItemClicked2 = (suggestion) => {
+    const airport2 = this.props.airports.find((a) => a.name === suggestion);
+    const coordinates2 = [airport2.latitude_deg, airport2.longitude_deg];
     this.setState({
       query2: suggestion,
       showSuggestions2: false,
+      coordinates2,
     });
   };
 
@@ -87,6 +95,7 @@ class AirportSearch extends Component {
             </li>
           ))}
         </ul>
+        <button className="button">Calculate</button>
       </div>
     );
   }

@@ -5,10 +5,17 @@ import { mockData } from "../mock-data";
 import { extractAirports } from "../api";
 
 describe("<AirportSearch /> component", () => {
-  let airports, AirportSearchWrapper;
+  let airports, locations, AirportSearchWrapper;
   beforeAll(() => {
-    airports = extractAirports(mockData);
-    AirportSearchWrapper = shallow(<AirportSearch airports={airports} />);
+    airports = mockData;
+    locations = extractAirports(airports);
+    AirportSearchWrapper = shallow(
+      <AirportSearch locations={locations} airports={airports} />
+    );
+  });
+
+  test("render calculate button", () => {
+    expect(AirportSearchWrapper.find(".button")).toHaveLength(1);
   });
 
   test("render from and to fields", () => {
@@ -41,10 +48,9 @@ describe("<AirportSearch /> component", () => {
   });
 
   test("render list of suggestions correctly: state = ul", () => {
-    const airports = extractAirports(mockData);
     AirportSearchWrapper.setState({
-      suggestions1: airports,
-      suggestions2: airports,
+      suggestions1: locations,
+      suggestions2: locations,
     });
     const suggestions1 = AirportSearchWrapper.state("suggestions1");
     const suggestions2 = AirportSearchWrapper.state("suggestions2");
@@ -72,7 +78,7 @@ describe("<AirportSearch /> component", () => {
       target: { value: "Berlin" },
     });
     const query = AirportSearchWrapper.state("query1");
-    const filteredAirports = airports.filter((a) => {
+    const filteredAirports = locations.filter((a) => {
       return a.toUpperCase().indexOf(query.toUpperCase()) > -1;
     });
     expect(AirportSearchWrapper.state("suggestions1")).toEqual(
@@ -91,5 +97,26 @@ describe("<AirportSearch /> component", () => {
     const suggestions2 = AirportSearchWrapper.state("suggestions2");
     AirportSearchWrapper.find(".suggestions2 li").at(0).simulate("click");
     expect(AirportSearchWrapper.state("query2")).toBe(suggestions2[0]);
+  });
+
+  test("selecting a suggestion should set coordinates", () => {
+    AirportSearchWrapper.setState({
+      query1: "Berlin",
+      query2: "Montreal",
+    });
+
+    AirportSearchWrapper.find(".suggestions1 li").at(0).simulate("click");
+    const airport1 = airports.find(
+      (a) => a.name === AirportSearchWrapper.state("query1")
+    );
+    const coordinates1 = [airport1.latitude_deg, airport1.longitude_deg];
+    expect(AirportSearchWrapper.state("coordinates1")).toEqual(coordinates1);
+
+    AirportSearchWrapper.find(".suggestions2 li").at(0).simulate("click");
+    const airport2 = airports.find(
+      (a) => a.name === AirportSearchWrapper.state("query2")
+    );
+    const coordinates2 = [airport2.latitude_deg, airport2.longitude_deg];
+    expect(AirportSearchWrapper.state("coordinates2")).toEqual(coordinates2);
   });
 });
