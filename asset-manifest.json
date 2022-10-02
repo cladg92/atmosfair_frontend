@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/atmosfair_frontend/static/css/main.073c9b0a.css",
-    "main.js": "/atmosfair_frontend/static/js/main.e859e902.js",
+    "main.js": "/atmosfair_frontend/static/js/main.f2a03399.js",
     "static/js/787.a96105e1.chunk.js": "/atmosfair_frontend/static/js/787.a96105e1.chunk.js",
     "service-worker.js": "/atmosfair_frontend/service-worker.js",
     "index.html": "/atmosfair_frontend/index.html",
     "main.073c9b0a.css.map": "/atmosfair_frontend/static/css/main.073c9b0a.css.map",
-    "main.e859e902.js.map": "/atmosfair_frontend/static/js/main.e859e902.js.map",
+    "main.f2a03399.js.map": "/atmosfair_frontend/static/js/main.f2a03399.js.map",
     "787.a96105e1.chunk.js.map": "/atmosfair_frontend/static/js/787.a96105e1.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.073c9b0a.css",
-    "static/js/main.e859e902.js"
+    "static/js/main.f2a03399.js"
   ]
 }
