@@ -6,6 +6,8 @@ class AirportSearch extends Component {
     query2: "",
     suggestions1: [],
     suggestions2: [],
+    showSuggestions1: undefined,
+    showSuggestions2: undefined,
   };
 
   handleInputChanged1 = (event) => {
@@ -27,12 +29,14 @@ class AirportSearch extends Component {
   handleItemClicked1 = (suggestion) => {
     this.setState({
       query1: suggestion,
+      showSuggestions1: false,
     });
   };
 
   handleItemClicked2 = (suggestion) => {
     this.setState({
       query2: suggestion,
+      showSuggestions2: false,
     });
   };
 
@@ -44,8 +48,14 @@ class AirportSearch extends Component {
           className="from"
           value={this.state.query1}
           onChange={this.handleInputChanged1}
-        ></input>
-        <ul className="suggestions1">
+          onFocus={() => {
+            this.setState({ showSuggestions1: true });
+          }}
+        />
+        <ul
+          className="suggestions1"
+          style={this.state.showSuggestions1 ? {} : { display: "none" }}
+        >
           {this.state.suggestions1.map((suggestion) => (
             <li
               key={suggestion}
@@ -54,17 +64,20 @@ class AirportSearch extends Component {
               {suggestion}
             </li>
           ))}
-          <li key="all">
-            <b>See all airports</b>
-          </li>
         </ul>
         <input
           type="text"
           className="to"
           value={this.state.query2}
           onChange={this.handleInputChanged2}
-        ></input>
-        <ul className="suggestions2">
+          onFocus={() => {
+            this.setState({ showSuggestions2: true });
+          }}
+        />
+        <ul
+          className="suggestions2"
+          style={this.state.showSuggestions2 ? {} : { display: "none" }}
+        >
           {this.state.suggestions2.map((suggestion) => (
             <li
               key={suggestion}
@@ -73,9 +86,6 @@ class AirportSearch extends Component {
               {suggestion}
             </li>
           ))}
-          <li key="all">
-            <b>See all airports</b>
-          </li>
         </ul>
       </div>
     );

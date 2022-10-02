@@ -49,10 +49,10 @@ describe("<AirportSearch /> component", () => {
     const suggestions1 = AirportSearchWrapper.state("suggestions1");
     const suggestions2 = AirportSearchWrapper.state("suggestions2");
     expect(AirportSearchWrapper.find(".suggestions1 li")).toHaveLength(
-      suggestions1.length + 1
+      suggestions1.length
     );
     expect(AirportSearchWrapper.find(".suggestions2 li")).toHaveLength(
-      suggestions2.length + 1
+      suggestions2.length
     );
     for (let i = 0; i < suggestions1.length; i += 1) {
       expect(AirportSearchWrapper.find(".suggestions1 li").at(i).text()).toBe(
