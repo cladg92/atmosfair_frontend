@@ -1,6 +1,5 @@
 # atmosfair_frontend
 
-# meet-app
 
 ## Description
 
