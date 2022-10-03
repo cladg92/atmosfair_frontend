@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Settings from "./Settings";
 import { ErrorAlert } from "./Alert";
-import { Card, Button } from "react-bootstrap";
+import { Card, Button, Row, Col, Container } from "react-bootstrap";
 
 class AirportSearch extends Component {
   state = {
@@ -18,6 +18,7 @@ class AirportSearch extends Component {
     factor: 0.158,
     detour: 10,
     ErrorText: "",
+    showSettings: false,
   };
 
   handleInputChanged1 = (event) => {
@@ -83,6 +84,12 @@ class AirportSearch extends Component {
     this.setState({ detour: event.target.value });
   };
 
+  handleSettingsClick = () => {
+    this.setState({
+      showSettings: true,
+    });
+  };
+
   distance_km = (c1, c2) => {
     let lat1 = c1[0];
     let lon1 = c1[1];
@@ -112,10 +119,9 @@ class AirportSearch extends Component {
     if (distance <= 16000) {
       let emissions_kg = factor * (distance + detour);
       let emissions_tons = (emissions_kg / 1000).toFixed(4);
-
       this.state.isChecked
-        ? this.setState({ emissions: emissions_tons * 2 })
-        : this.setState({ emissions: emissions_tons });
+        ? this.setState({ emissions: emissions_tons * 2, ErrorText: "" })
+        : this.setState({ emissions: emissions_tons, ErrorText: "" });
     } else {
       this.setState({
         ErrorText: "There are no scheduled passenger flights for this route",
@@ -125,93 +131,103 @@ class AirportSearch extends Component {
 
   render() {
     return (
-      <div className="AirportSearch">
-        <Card>
-          <Card.Body>
-            <input
-              type="text"
-              className="from"
-              value={this.state.query1}
-              onChange={this.handleInputChanged1}
-              onFocus={() => {
-                this.setState({ showSuggestions1: true });
-              }}
-              placeholder="from"
-            />
-            <ul
-              className="suggestions suggestions1"
-              style={this.state.showSuggestions1 ? {} : { display: "none" }}
-            >
-              {this.state.suggestions1.map((suggestion) => (
-                <li
-                  key={suggestion}
-                  onClick={() => this.handleItemClicked1(suggestion)}
+      <Container className="AirportSearch">
+        <Row>
+          <Col className="calculator">
+            <Card>
+              <Card.Body>
+                <input
+                  type="text"
+                  className="from"
+                  value={this.state.query1}
+                  onChange={this.handleInputChanged1}
+                  onFocus={() => {
+                    this.setState({ showSuggestions1: true });
+                  }}
+                  placeholder="from"
+                />
+                <ul
+                  className="suggestions suggestions1"
+                  style={this.state.showSuggestions1 ? {} : { display: "none" }}
                 >
-                  {suggestion}
-                </li>
-              ))}
-            </ul>
-            <input
-              type="text"
-              className="to"
-              value={this.state.query2}
-              onChange={this.handleInputChanged2}
-              onFocus={() => {
-                this.setState({ showSuggestions2: true });
-              }}
-              placeholder="to"
-            />
-            <ul
-              className="suggestions suggestions2"
-              style={this.state.showSuggestions2 ? {} : { display: "none" }}
-            >
-              {this.state.suggestions2.map((suggestion) => (
-                <li
-                  key={suggestion}
-                  onClick={() => this.handleItemClicked2(suggestion)}
+                  {this.state.suggestions1.map((suggestion) => (
+                    <li
+                      key={suggestion}
+                      onClick={() => this.handleItemClicked1(suggestion)}
+                    >
+                      {suggestion}
+                    </li>
+                  ))}
+                </ul>
+                <input
+                  type="text"
+                  className="to"
+                  value={this.state.query2}
+                  onChange={this.handleInputChanged2}
+                  onFocus={() => {
+                    this.setState({ showSuggestions2: true });
+                  }}
+                  placeholder="to"
+                />
+                <ul
+                  className="suggestions suggestions2"
+                  style={this.state.showSuggestions2 ? {} : { display: "none" }}
                 >
-                  {suggestion}
-                </li>
-              ))}
-            </ul>
-            <label className="label">Roundtrip: </label>
-            <input
-              type="checkbox"
-              className="roundtrip"
-              name="roundtrip"
-              value={this.state.isChecked}
-              onChange={this.handleChangeCheckbox}
+                  {this.state.suggestions2.map((suggestion) => (
+                    <li
+                      key={suggestion}
+                      onClick={() => this.handleItemClicked2(suggestion)}
+                    >
+                      {suggestion}
+                    </li>
+                  ))}
+                </ul>{" "}
+                <br />
+                <label className="label">Roundtrip</label>
+                <input
+                  type="checkbox"
+                  className="roundtrip"
+                  name="roundtrip"
+                  value={this.state.isChecked}
+                  onChange={this.handleChangeCheckbox}
+                />
+                <br />
+                <Button
+                  className="button"
+                  onClick={() =>
+                    this.emissions_tons(
+                      this.distance_km(
+                        this.state.coordinates1,
+                        this.state.coordinates2
+                      ),
+                      this.state.factor,
+                      this.state.detour
+                    )
+                  }
+                >
+                  Calculate
+                </Button>
+              </Card.Body>
+              <Card.Footer>
+                <ErrorAlert
+                  className="error-alert"
+                  text={this.state.ErrorText}
+                />
+                <label className="label">Result</label>
+                <div className="result">{`${this.state.emissions} tons of CO2`}</div>
+              </Card.Footer>
+            </Card>
+          </Col>
+          <Col className="settings">
+            <Settings
+              detour={this.state.detour}
+              factor={this.state.factor}
+              handleChangeDetour={this.handleChangeDetour}
+              handleChangeFactor={this.handleChangeFactor}
             />
-            <Button
-              className="button"
-              onClick={() =>
-                this.emissions_tons(
-                  this.distance_km(
-                    this.state.coordinates1,
-                    this.state.coordinates2
-                  ),
-                  this.state.factor,
-                  this.state.detour
-                )
-              }
-            >
-              Calculate
-            </Button>
-          </Card.Body>
-          <Card.Footer>
-            <label className="label">Result:</label>
-            <ErrorAlert className="error-alert" text={this.state.ErrorText} />
-            <div className="result">{`${this.state.emissions} tons of CO2`}</div>
-          </Card.Footer>
-        </Card>
-
-        <Settings
-          detour={this.state.detour}
-          factor={this.state.factor}
-          handleChangeDetour={this.handleChangeDetour}
-          handleChangeFactor={this.handleChangeFactor}
-        />
-      </div>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }
