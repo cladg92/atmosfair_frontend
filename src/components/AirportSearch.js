@@ -21,6 +21,7 @@ class AirportSearch extends Component {
     showSettings: false,
   };
 
+  // Handle input change of "from" (departure airport) field and show suggestions
   handleInputChanged1 = (event) => {
     const value = event.target.value;
     if (value) {
@@ -33,6 +34,7 @@ class AirportSearch extends Component {
     }
   };
 
+  // Handle input change of "to" (arrival airport) field and show suggestions
   handleInputChanged2 = (event) => {
     const value = event.target.value;
     if (value) {
@@ -45,6 +47,7 @@ class AirportSearch extends Component {
     }
   };
 
+  // When suggestion in "from" (departure airport) field is selected save coordinates
   handleItemClicked1 = (suggestion) => {
     const airport1 = this.props.airports.find((a) => a.name === suggestion);
     const coordinates1 = [airport1.latitude_deg, airport1.longitude_deg];
@@ -55,6 +58,7 @@ class AirportSearch extends Component {
     });
   };
 
+  // When suggestion in "to" field (arrival airport) is selected save coordinates
   handleItemClicked2 = (suggestion) => {
     const airport2 = this.props.airports.find((a) => a.name === suggestion);
     const coordinates2 = [airport2.latitude_deg, airport2.longitude_deg];
@@ -65,31 +69,26 @@ class AirportSearch extends Component {
     });
   };
 
+  // Handle "roundtrip" checkbox and set in state
   handleChangeCheckbox = (event) => {
     if (event.target.checked) {
-      console.log("Checkbox is checked");
       this.setState({ isChecked: true });
     } else {
       this.setState({ isChecked: false });
     }
   };
 
+  // Handle the factor field (kg/km) and set in state
   handleChangeFactor = (event) => {
-    console.log(event.target.value);
     this.setState({ factor: event.target.value });
   };
 
+  // Handle the detour field (km) and set in state
   handleChangeDetour = (event) => {
-    console.log(event.target.value);
     this.setState({ detour: event.target.value });
   };
 
-  handleSettingsClick = () => {
-    this.setState({
-      showSettings: true,
-    });
-  };
-
+  // Calculate distance between two sets of coordinates
   distance_km = (c1, c2) => {
     let lat1 = c1[0];
     let lon1 = c1[1];
@@ -114,8 +113,8 @@ class AirportSearch extends Component {
     return d;
   };
 
+  // Calculate emissions in tons of CO2
   emissions_tons = (distance, factor, detour) => {
-    console.log(distance);
     if (distance <= 16000) {
       let emissions_kg = factor * (distance + detour);
       let emissions_tons = (emissions_kg / 1000).toFixed(4);
@@ -133,10 +132,12 @@ class AirportSearch extends Component {
     return (
       <Container className="AirportSearch">
         <Row>
+          {/* Calculator section */}
           <Col className="calculator">
             <Card>
               <Card.Header className="card-header">Calculator</Card.Header>
               <Card.Body>
+                {/* Depature airport field */}
                 <input
                   type="text"
                   className="from"
@@ -147,6 +148,7 @@ class AirportSearch extends Component {
                   }}
                   placeholder="from"
                 />
+                {/* Suggestions list */}
                 <ul
                   className="suggestions suggestions1"
                   style={this.state.showSuggestions1 ? {} : { display: "none" }}
@@ -160,6 +162,7 @@ class AirportSearch extends Component {
                     </li>
                   ))}
                 </ul>
+                {/* Arrival airport field */}
                 <input
                   type="text"
                   className="to"
@@ -170,6 +173,7 @@ class AirportSearch extends Component {
                   }}
                   placeholder="to"
                 />
+                {/* Suggestions list */}
                 <ul
                   className="suggestions suggestions2"
                   style={this.state.showSuggestions2 ? {} : { display: "none" }}
@@ -184,6 +188,7 @@ class AirportSearch extends Component {
                   ))}
                 </ul>{" "}
                 <br />
+                {/* Roundtrip checkbox */}
                 <label className="label">Roundtrip</label>
                 <input
                   type="checkbox"
@@ -210,15 +215,18 @@ class AirportSearch extends Component {
                 </Button>
               </Card.Body>
               <Card.Footer>
+                {/* Alert message if distance > 16000km */}
                 <ErrorAlert
                   className="error-alert"
                   text={this.state.ErrorText}
                 />
+                {/* Result section */}
                 <label className="label">Result</label>
                 <div className="result">{`${this.state.emissions} tons of CO2`}</div>
               </Card.Footer>
             </Card>
           </Col>
+          {/* Settings section */}
           <Col className="settings">
             <Settings
               detour={this.state.detour}

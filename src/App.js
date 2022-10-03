@@ -12,6 +12,7 @@ class App extends Component {
     locations: [],
   };
 
+  // Get list of airports and set state
   componentDidMount() {
     axios
       .get("https://atmosfair.herokuapp.com/airports")
