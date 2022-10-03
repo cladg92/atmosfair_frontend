@@ -6,7 +6,7 @@ class Settings extends Component {
       <div className="Settings">
         <h3>Settings</h3>
         <div className="factor">
-          <label>Factor</label>
+          <label className="label">Factor</label>
           <input
             type="number"
             step="any"
@@ -17,7 +17,7 @@ class Settings extends Component {
           <span style={{ marginLeft: 5 }}>kg/km</span>
         </div>
         <div className="detour">
-          <label>Detour</label>
+          <label className="label">Detour</label>
           <input
             type="number"
             className="detour"

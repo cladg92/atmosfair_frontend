@@ -21,18 +21,26 @@ class AirportSearch extends Component {
 
   handleInputChanged1 = (event) => {
     const value = event.target.value;
-    const suggestions1 = this.props.locations.filter((a) => {
-      return a.toUpperCase().indexOf(value.toUpperCase()) > -1;
-    });
-    this.setState({ query1: value, suggestions1 });
+    if (value) {
+      const suggestions1 = this.props.locations.filter((a) => {
+        return a.toUpperCase().indexOf(value.toUpperCase()) > -1;
+      });
+      this.setState({ query1: value, suggestions1 });
+    } else {
+      this.setState({ query1: value, suggestions1: [] });
+    }
   };
 
   handleInputChanged2 = (event) => {
     const value = event.target.value;
-    const suggestions2 = this.props.locations.filter((a) => {
-      return a.toUpperCase().indexOf(value.toUpperCase()) > -1;
-    });
-    this.setState({ query2: value, suggestions2 });
+    if (value) {
+      const suggestions2 = this.props.locations.filter((a) => {
+        return a.toUpperCase().indexOf(value.toUpperCase()) > -1;
+      });
+      this.setState({ query2: value, suggestions2 });
+    } else {
+      this.setState({ query2: value, suggestions2: [] });
+    }
   };
 
   handleItemClicked1 = (suggestion) => {
@@ -125,9 +133,10 @@ class AirportSearch extends Component {
           onFocus={() => {
             this.setState({ showSuggestions1: true });
           }}
+          placeholder="from"
         />
         <ul
-          className="suggestions1"
+          className="suggestions suggestions1"
           style={this.state.showSuggestions1 ? {} : { display: "none" }}
         >
           {this.state.suggestions1.map((suggestion) => (
@@ -147,9 +156,10 @@ class AirportSearch extends Component {
           onFocus={() => {
             this.setState({ showSuggestions2: true });
           }}
+          placeholder="to"
         />
         <ul
-          className="suggestions2"
+          className="suggestions suggestions2"
           style={this.state.showSuggestions2 ? {} : { display: "none" }}
         >
           {this.state.suggestions2.map((suggestion) => (
@@ -161,6 +171,7 @@ class AirportSearch extends Component {
             </li>
           ))}
         </ul>
+        <label className="label">Roundtrip: </label>
         <input
           type="checkbox"
           className="roundtrip"

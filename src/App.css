@@ -28,11 +28,48 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+input[type="text"],
+input[type="number"] {
+  padding: 8px 6px 8px 10px;
+  margin: 10px;
+  border-radius: 4px;
+  outline: none;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  line-height: 20px;
+  align-self: center;
+  height: 38px;
+  width: 180px;
+}
+
+input[type="checkbox"] {
+  margin: 10px;
+}
+
+.label {
+  align-self: center;
+  font-weight: 500;
+}
+
+.suggestions {
+  width: 180px;
+  position: absolute;
+  z-index: 2;
+  align-self: center;
+  margin: 0;
+  top: 90px;
+  font-size: 14px;
+  box-shadow: 10px 10px 16px -12px rgba(0, 0, 0, 0.75);
+  list-style-type: none;
+}
+
+.suggestions > li {
+  text-align: left;
+  padding: 8px 6px 8px 10px;
+  background-color: white;
+  cursor: default;
+}
+
+.suggestions > li:hover {
+  background-color: #f5cb42;
 }
