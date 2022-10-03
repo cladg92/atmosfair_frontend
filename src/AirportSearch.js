@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Settings from "./Settings";
 
 class AirportSearch extends Component {
   state = {
@@ -12,6 +13,8 @@ class AirportSearch extends Component {
     coordinates2: [],
     emissions: undefined,
     isChecked: false,
+    factor: 0.158,
+    detour: 10,
   };
 
   handleInputChanged1 = (event) => {
@@ -50,13 +53,23 @@ class AirportSearch extends Component {
     });
   };
 
-  handleChange = (event) => {
+  handleChangeCheckbox = (event) => {
     if (event.target.checked) {
       console.log("Checkbox is checked");
       this.setState({ isChecked: true });
     } else {
       this.setState({ isChecked: false });
     }
+  };
+
+  handleChangeFactor = (event) => {
+    console.log(event.target.value);
+    this.setState({ factor: event.target.value });
+  };
+
+  handleChangeDetour = (event) => {
+    console.log(event.target.value);
+    this.setState({ detour: event.target.value });
   };
 
   distance_km = (c1, c2) => {
@@ -144,7 +157,7 @@ class AirportSearch extends Component {
           className="roundtrip"
           name="roundtrip"
           value={this.state.isChecked}
-          onChange={this.handleChange}
+          onChange={this.handleChangeCheckbox}
         />
         <button
           className="button"
@@ -154,15 +167,22 @@ class AirportSearch extends Component {
                 this.state.coordinates1,
                 this.state.coordinates2
               ),
-              0.158,
-              10
+              this.state.factor,
+              this.state.detour
             )
           }
         >
           Calculate
         </button>
+
         <label>Result:</label>
         <div className="result">{this.state.emissions}</div>
+        <Settings
+          detour={this.state.detour}
+          factor={this.state.factor}
+          handleChangeDetour={this.handleChangeDetour}
+          handleChangeFactor={this.handleChangeFactor}
+        />
       </div>
     );
   }

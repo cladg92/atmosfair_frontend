@@ -1,8 +1,9 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { shallow, mount } from "enzyme";
 import AirportSearch from "../AirportSearch";
 import { mockData } from "../mock-data";
 import { extractAirports } from "../api";
+import Settings from "../Settings";
 
 describe("<AirportSearch /> component", () => {
   let airports, locations, AirportSearchWrapper;
@@ -190,5 +191,22 @@ describe("<AirportSearch /> component", () => {
     AirportSearchWrapper.find(".button").simulate("click");
 
     expect(AirportSearchWrapper.state("emissions")).toBe(2 * 0.953583450026314);
+  });
+});
+
+describe("<AirportSearch /> integration", () => {
+  test('AirportSearch passes "factor" & "detour" state as a prop to Settings', () => {
+    const AirportSearchWrapper = mount(<AirportSearch />);
+    const AirportSearchDetourState = AirportSearchWrapper.state("detour");
+    const AirportSearchFactorState = AirportSearchWrapper.state("factor");
+    expect(AirportSearchDetourState).not.toEqual(undefined);
+    expect(AirportSearchFactorState).not.toEqual(undefined);
+    expect(AirportSearchWrapper.find(Settings).props().detour).toEqual(
+      AirportSearchDetourState
+    );
+    expect(AirportSearchWrapper.find(Settings).props().factor).toEqual(
+      AirportSearchFactorState
+    );
+    AirportSearchWrapper.unmount();
   });
 });
