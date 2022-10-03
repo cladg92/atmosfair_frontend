@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Settings from "./Settings";
+import { ErrorAlert } from "./Alert";
 
 class AirportSearch extends Component {
   state = {
@@ -15,6 +16,7 @@ class AirportSearch extends Component {
     isChecked: false,
     factor: 0.158,
     detour: 10,
+    ErrorText: "",
   };
 
   handleInputChanged1 = (event) => {
@@ -97,12 +99,19 @@ class AirportSearch extends Component {
   };
 
   emissions_tons = (distance, factor, detour) => {
-    let emissions_kg = factor * (distance + detour);
-    let emissions_tons = emissions_kg / 1000;
+    console.log(distance);
+    if (distance <= 16000) {
+      let emissions_kg = factor * (distance + detour);
+      let emissions_tons = emissions_kg / 1000;
 
-    this.state.isChecked
-      ? this.setState({ emissions: emissions_tons * 2 })
-      : this.setState({ emissions: emissions_tons });
+      this.state.isChecked
+        ? this.setState({ emissions: emissions_tons * 2 })
+        : this.setState({ emissions: emissions_tons });
+    } else {
+      this.setState({
+        ErrorText: "There are no scheduled passenger flights for this route",
+      });
+    }
   };
 
   render() {
@@ -176,6 +185,7 @@ class AirportSearch extends Component {
         </button>
 
         <label>Result:</label>
+        <ErrorAlert className="error-alert" text={this.state.ErrorText} />
         <div className="result">{this.state.emissions}</div>
         <Settings
           detour={this.state.detour}

@@ -192,6 +192,25 @@ describe("<AirportSearch /> component", () => {
 
     expect(AirportSearchWrapper.state("emissions")).toBe(2 * 0.953583450026314);
   });
+
+  test("selecting a flight with d>16000 km prompts and error message", () => {
+    AirportSearchWrapper.setState({
+      query1: "Berlin",
+      query2: "Montreal",
+    });
+
+    AirportSearchWrapper.find(".suggestions1 li").at(0).simulate("click");
+
+    AirportSearchWrapper.find(".suggestions2 li").at(0).simulate("click");
+
+    AirportSearchWrapper.find(".roundtrip").simulate("change", {
+      target: { checked: true },
+    });
+
+    AirportSearchWrapper.find(".button").simulate("click");
+
+    expect(AirportSearchWrapper.state("emissions")).toBe(2 * 0.953583450026314);
+  });
 });
 
 describe("<AirportSearch /> integration", () => {
