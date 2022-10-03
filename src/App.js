@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import axios from "axios";
 
 import "./App.css";
-import AirportSearch from "./AirportSearch";
+import AirportSearch from "./components/AirportSearch";
 //import { mockData } from "./mock-data";
-import { extractAirports } from "./api";
+import { extractAirports } from "./components/api";
 
 class App extends Component {
   state = {
@@ -16,7 +16,6 @@ class App extends Component {
     axios
       .get("https://atmosfair.herokuapp.com/airports")
       .then((response) => {
-        console.log(response.data.length);
         this.setState({
           airports: response.data,
           locations: extractAirports(response.data),
@@ -25,12 +24,13 @@ class App extends Component {
       .catch((error) => {
         console.log(error);
       });
-    console.log(this.state.airports.length);
   }
 
   render() {
     return (
       <div className="App">
+        <h1 className="page-title">Atmosfair</h1>
+        <h4 className="page-sub">Calculate your flight's emissions</h4>
         <AirportSearch
           airports={this.state.airports}
           locations={this.state.locations}

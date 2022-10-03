@@ -135,6 +135,7 @@ class AirportSearch extends Component {
         <Row>
           <Col className="calculator">
             <Card>
+              <Card.Header className="card-header">Calculator</Card.Header>
               <Card.Body>
                 <input
                   type="text"
