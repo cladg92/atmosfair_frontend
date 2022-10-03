@@ -10,7 +10,8 @@ Check it out live [here](https://cladg92.github.io/atmosfair_frontend/).
 ## Description
 
 The app allows users to estimate CO2 emissions of a direct flight between two airports using the following formula:
-𝐸𝑚𝑖𝑠𝑠𝑖𝑜𝑛𝑠 = 𝑓𝑎𝑐𝑡𝑜𝑟 ∗ (𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒 + 𝑑𝑒𝑡𝑜𝑢𝑟)
+
+Emissions = factor * (distance + detour)
   
 ## Set up
 
