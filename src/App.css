@@ -30,12 +30,22 @@ input[type="text"] {
   margin: 10px;
   border-radius: 4px;
   outline: none;
-  border: 1px solid #ccc;
+  border: 1px solid rgb(149, 140, 140);
   font-size: 16px;
   line-height: 20px;
   align-self: center;
   height: 38px;
   width: 180px;
+}
+
+input[type="number"] {
+  border: 1px solid rgb(149, 140, 140);
+}
+
+.card {
+  border: 1px solid rgb(149, 140, 140);
+  box-shadow: 10px 10px 16px -12px rgba(0, 0, 0, 0.75);
+  margin-top: 20px;
 }
 
 input[type="checkbox"] {
@@ -60,12 +70,13 @@ input[type="checkbox"] {
 
 .suggestions1 {
   position: absolute;
+  left: 15%;
 }
 
 .suggestions2 {
   width: 180px;
   position: absolute;
-  left: 55%;
+  left: 53%;
 }
 
 .suggestions > li {

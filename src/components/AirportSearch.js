@@ -133,7 +133,7 @@ class AirportSearch extends Component {
       <Container className="AirportSearch">
         <Row>
           {/* Calculator section */}
-          <Col className="calculator">
+          <Col sm={8} className="calculator">
             <Card>
               <Card.Header className="card-header">Calculator</Card.Header>
               <Card.Body>
@@ -227,7 +227,7 @@ class AirportSearch extends Component {
             </Card>
           </Col>
           {/* Settings section */}
-          <Col className="settings">
+          <Col sm={4} className="settings">
             <Settings
               detour={this.state.detour}
               factor={this.state.factor}
