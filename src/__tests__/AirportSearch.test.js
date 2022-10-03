@@ -165,7 +165,7 @@ describe("<AirportSearch /> component", () => {
 
     function emissions_tons(distance, factor, detour) {
       let emissions_kg = factor * (distance + detour);
-      return emissions_kg / 1000;
+      return (emissions_kg / 1000).toFixed(4);
     }
 
     let dist = distance_km(coordinates1, coordinates2);
@@ -190,10 +190,11 @@ describe("<AirportSearch /> component", () => {
 
     AirportSearchWrapper.find(".button").simulate("click");
 
-    expect(AirportSearchWrapper.state("emissions")).toBe(2 * 0.953583450026314);
+    expect(AirportSearchWrapper.state("emissions")).toBe(2 * 0.9536);
   });
 
-  test("selecting a flight with d>16000 km prompts and error message", () => {
+  // To implement
+  /* test("selecting a flight with d>16000 km prompts and error message", () => {
     AirportSearchWrapper.setState({
       query1: "Berlin",
       query2: "Montreal",
@@ -210,7 +211,7 @@ describe("<AirportSearch /> component", () => {
     AirportSearchWrapper.find(".button").simulate("click");
 
     expect(AirportSearchWrapper.state("emissions")).toBe(2 * 0.953583450026314);
-  });
+  });*/
 });
 
 describe("<AirportSearch /> integration", () => {
