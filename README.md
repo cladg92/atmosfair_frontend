@@ -3,7 +3,7 @@
 
 ## Description
 
-Web application built using React using a test-driven development (TDD) technique. The app fetches data from the related API (i.e,[here](https://atmosfair.herokuapp.com/airports)) .
+Web application built using a test-driven development (TDD) technique. The app fetches data from the related API (i.e,[here](https://atmosfair.herokuapp.com/airports)) .
 
 Check it out live [here](https://cladg92.github.io/atmosfair_frontend/).
 
